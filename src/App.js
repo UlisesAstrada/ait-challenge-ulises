@@ -1,23 +1,30 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
+
 import './App.css';
 
 function App() {
+
+  const [products, setProducts] = useState([])
+
+  useEffect(() =>
+  fetch('https://ait-tesapi.herokuapp.com/products')
+    .then(response => response.json())
+    .then((res) => setProducts(res.products))
+  ,[])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="App bg-info">
+      <header><h1>Productos</h1></header>
+      <div className='container'>
+      {products.map((item) => 
+        <ul>
+          <li className='bg-primary'>
+            <h4>{item.name}</h4>
+            <img src={item.image} alt={item.name}></img>
+          </li>
+        </ul>
+      )}
+      </div>
     </div>
   );
 }
