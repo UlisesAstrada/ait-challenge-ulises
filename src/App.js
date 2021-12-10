@@ -27,7 +27,10 @@ function App() {
     if(exists) {
       setCart(
         cart.map((x) => 
-          x._id === item._id ? {...exists, stock: exists.stock + 1} : x
+          x._id === item._id ? 
+            {...exists, stock: exists.stock + 1} 
+            : 
+            x
         )
       )
     } else {
@@ -39,6 +42,15 @@ function App() {
     const exists = cart.find((x) => x._id === item._id)
     if(exists.stock === 1) {
       setCart(cart.filter((x) => x._id !== item._id))
+    } else {
+      setCart(
+        cart.map((x) => 
+          x._id === item._id ? 
+            {...exists, stock: exists.stock - 1} 
+            : 
+            x
+        )
+      )
     }
   }
 
@@ -49,7 +61,7 @@ function App() {
       <header><h1>Productos</h1></header>
       <div className='container'>
       {products.map((item) => 
-        <Product key={item._id} item={item} onAdd={onAdd} />
+        <Product key={item._id} item={item} onAdd={onAdd}/>
       )}
       </div>
       <footer className='d-flex bg-primary justify-content-center py-3'>
@@ -65,6 +77,7 @@ function App() {
         onHide={() => setModalShow(false)}
         cart={cart}
         onAdd={onAdd}
+        onRemove={onRemove}
       />
 
       </footer>

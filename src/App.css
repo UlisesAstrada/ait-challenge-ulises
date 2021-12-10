@@ -48,3 +48,12 @@ footer {
   bottom: 0px;
   position: sticky;
 }
+
+.img-modal {
+  width: 100px;
+  height: 100px;
+}
+
+.product-card {
+  width: 300px;
+}
