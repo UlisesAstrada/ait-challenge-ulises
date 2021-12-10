@@ -9,7 +9,7 @@ const Product = (props) => {
       <h3>{item.name}</h3> 
       <img src={item.image} alt={item.name} />
       <div><b>Stock: {item.stock}</b></div>
-      <div>Precio: {item.price.substring(1)}</div>
+      <div>Precio: ${item.price.substring(1)}</div>
       <div>
         {item.stock === 0 ? 
               <button 

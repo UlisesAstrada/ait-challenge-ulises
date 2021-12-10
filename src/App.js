@@ -65,12 +65,25 @@ function App() {
       )}
       </div>
       <footer className='d-flex bg-primary justify-content-center py-3'>
-        <Button 
+        {
+          cart.length === 1 ? (
+            <Button 
           variant="success"
           onClick={() => setModalShow(true)}
         >
-          Ver carrito
+          Ver carrito - {cart.length} producto
         </Button>
+          )
+          :
+          (
+            <Button 
+          variant="success"
+          onClick={() => setModalShow(true)}
+        >
+          Ver carrito - {cart.length} productos
+        </Button>
+          )
+        }
 
         <CenteredModal
         show={modalShow}

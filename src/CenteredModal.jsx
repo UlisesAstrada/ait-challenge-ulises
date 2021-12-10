@@ -2,6 +2,8 @@ import React from 'react'
 
 import {Modal, Button} from 'react-bootstrap'
 
+import Form from './Form'
+
 import './App.css'
 
 const CenteredModal = (props) =>  {
@@ -58,37 +60,39 @@ const CenteredModal = (props) =>  {
               <hr/>
               <div className="bg-primary mt-1 d-flex justify-content-center">
                 <div>
-                  Precio sin IVA
+                  <b>Precio sin IVA:</b>
                 </div>
-                <div>
-                  {itemsPrice.toFixed(2)}
+                <div className="ml-2">
+                   <i>${itemsPrice.toFixed(2)}</i>
                 </div>
               </div>
 
               <div className="bg-primary mt-1 d-flex justify-content-center">
                 <div>
-                  IVA
+                  <b>IVA:</b>
                 </div>
-                <div>
-                  {iva.toFixed(2)}
+                <div className="ml-2">
+                  <i>${iva.toFixed(2)}</i>
                 </div>  
               </div>
 
               <div className="bg-primary mt-1 d-flex justify-content-center">
                 <div>
-                  Total
+                  <b>Total: </b>
                 </div>
-                <div>
-                  {totalPrice.toFixed(2)}
+                <div className="ml-2">
+                  <i>${totalPrice.toFixed(2)}</i>
                 </div>
               </div>
-
+              <div className="d-flex justify-content-center align-items-center mt-2 flex-column">
+              <Form />
+              </div>
             </>
           )}
         </div>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Cerrar</Button>
+      <Modal.Footer className="d-flex justify-content-center">
+          <Button onClick={props.onHide}>Cerrar</Button>
       </Modal.Footer>
     </Modal>
   );
