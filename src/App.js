@@ -2,17 +2,15 @@ import React, { useEffect, useState } from 'react';
 
 import { Button } from 'react-bootstrap';
 
+import Product from './Product.jsx'
+import CenteredModal from './CenteredModal.jsx';
+
 import './App.css';
 
+
+
 function App() {
-
-  const [products, setProducts] = useState([])
-
-  const [cart, setCart] = useState([])
-
-  const [stock, setStock] = useState()
-
-
+  
   useEffect(() =>
   fetch('https://ait-tesapi.herokuapp.com/products')
     .then(response => response.json())
@@ -20,43 +18,54 @@ function App() {
     .catch(err => new Error(err))
   ,[])
 
+  const [products, setProducts] = useState([])
+
+  const [cart, setCart] = useState([])
+
+  const onAdd = (item) => {
+    const exists = cart.find(x => x._id === item._id)
+    if(exists) {
+      setCart(
+        cart.map((x) => 
+          x._id === item._id ? {...exists, stock: exists.stock + 1} : x
+        )
+      )
+    } else {
+      setCart([...cart, {...item, stock: 1}])
+    }
+  }
+
+  const onRemove = (item) => {
+    const exists = cart.find((x) => x._id === item._id)
+    if(exists.stock === 1) {
+      setCart(cart.filter((x) => x._id !== item._id))
+    }
+  }
+
+  const [modalShow, setModalShow] = React.useState(false);
+
   return (
     <div className="App bg-info">
       <header><h1>Productos</h1></header>
       <div className='container'>
       {products.map((item) => 
-        <ul key={item._id}  >
-          <li className='bg-primary'>
-            <h4>{item.name}</h4>
-            <img src={item.image} alt={item.name}></img>
-            <b>Stock: {item.stock} unidades</b>
-            <h5>Precio: {item.price}</h5>
-            {item.stock === 0 ? 
-              <button 
-                type='button' 
-                className='btn btn-success' 
-                disabled
-              >
-                Añadir
-              </button>
-              :
-              <button
-                type='button' 
-                className='btn btn-success'
-              >
-                Añadir
-              </button>
-            }
-          </li>
-        </ul>
+        <Product key={item._id} item={item} onAdd={onAdd} />
       )}
       </div>
       <footer className='d-flex bg-primary justify-content-center py-3'>
         <Button 
           variant="success"
+          onClick={() => setModalShow(true)}
         >
           Ver carrito
         </Button>
+
+        <CenteredModal
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        cart={cart}
+        onAdd={onAdd}
+      />
 
       </footer>
     </div>

@@ -30,14 +30,14 @@ header {
   justify-content: center;
   align-items: center;
   margin: 40px;
-  width: 330px;
-  height: 500px;
+  min-width: 170px;
+  min-height: 220px;
   border-radius: 20px;
 }
 
 img {
-  max-height: 300px;
-  max-width: 300px;
+  max-height: 150px;
+  max-width: 150px;
   margin-bottom: 30px;
   margin-top: 20px;
   border-radius: 20px;
