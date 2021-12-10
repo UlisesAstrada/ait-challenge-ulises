@@ -15,10 +15,10 @@ const Form = () => {
     <form onSubmit={handleSubmit(onSubmit)} >
       <h3>Medios de pago</h3>
       <div className="d-flex justify-content-center">
-        
-          <input type="radio" value={false} onChange={toggleAnswer}>Efectivo</input>
-          <input type="radio" value={true} onChange={toggleAnswer}>Tarjeta</input>
-
+        <select {...register("payment-method")}>
+          <option value={false} onChange={toggleAnswer}>Efectivo</option>
+          <option value={true} onChange={toggleAnswer}>Tarjeta</option>
+        </select>
       </div>
       <div>
         {answer ? 
