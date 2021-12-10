@@ -31,7 +31,8 @@ header {
   align-items: center;
   margin: 40px;
   width: 330px;
-  height: 400px;
+  height: 500px;
+  border-radius: 20px;
 }
 
 img {
@@ -39,4 +40,11 @@ img {
   max-width: 300px;
   margin-bottom: 30px;
   margin-top: 20px;
+  border-radius: 20px;
+}
+
+footer {
+  width: 100%;
+  bottom: 0px;
+  position: sticky;
 }
