@@ -1,47 +1,60 @@
-import React, {useState} from "react";
+import React from "react";
+import axios from "axios"
+import Swal from 'sweetalert2'
 
 import { useForm } from "react-hook-form";
 import {Button} from 'react-bootstrap' 
 
 
-const Form = () => {
-  const { register, handleSubmit } = useForm();
+const Form = (props) => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const onSubmit = data => console.log(data)
-   
-  const [answer, setAnswer] = useState(false)
-  const toggleAnswer = () => setAnswer(!answer)
+
+  const {itemsPrice, iva, totalPrice, cart} = props
+
+  const handleRequest = () => {
+    axios.post('https://ait-tesapi.herokuapp.com/sales', {
+      products: cart.products,
+      itemsPrice: itemsPrice,
+      iva: iva,
+      totalPrice: totalPrice
+    })
+    .then(function(response) {
+      console.log(response)
+    })
+    .then(() => {
+      Swal.fire({
+        icon: 'success',
+        title: 'Yay!',
+        text: 'Venta completada!'
+      })
+    })
+    .catch(() => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'La venta no se pudo concretar, probá nuevamente'
+      })
+    })
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} >
-      <h3>Medios de pago</h3>
-      <div className="d-flex justify-content-center">
-        <select {...register("payment-method")}>
-          <option value={false} onChange={toggleAnswer}>Efectivo</option>
-          <option value={true} onChange={toggleAnswer}>Tarjeta</option>
-        </select>
-      </div>
-      <div>
-        {answer ? 
-        (
-          <div>
-            <h3>Datos de la tarjeta</h3>
-            <input {...register("card-owner")} placeholder="Nombre y apellido" />
-            <input {...register("card-number")} placeholder="16 dígitos" />
-            <input {...register("card-expiry")} placeholder="Vencimiento" />
-            <input type="password" {...register("cvv")} placeholder="Código de seguridad" />
-          </div>
-        ) 
-        : 
-        ""}
-      </div>
       <div className="d-flex flex-column">
         <h3>Datos del cliente</h3>
-        <input {...register("firstName")} placeholder="Nombre" />
-        <input {...register("lastName")} placeholder="Apellido" />
-        <input {...register("address")} placeholder="Domicilio (calle, localidad, provincia)" />
-        <input {...register("cuil")} placeholder="CUIL" />
+        <input {...register("firstName", {required: true})} placeholder="Nombre" className="mb-1" />
+        {errors.firstName && <span className="bg-danger mb-2">El nombre es requerido</span>}
+
+        <input {...register("lastName", {required: true})} placeholder="Apellido" className="mb-1"/>
+        {errors.lastName && <span className="bg-danger mb-2">El apellido es requerido</span>}
+
+        <input {...register("address", {required: true})} placeholder="Domicilio (calle, localidad, provincia)" className="mb-1" />
+        {errors.address && <span className="bg-danger mb-2">El domicilio es requerido</span>}
+
+        <input {...register("cuil", {required: true, minLength: 11, maxLength: 11})} placeholder="CUIL/CUIT" className="mb-1" />
+        {errors.cuil && <span className="bg-danger mb-2">El CUIT/CUIL es requerido, sin espacios ni guiones</span>}
       </div>
-      <Button type="submit" className="bg-success">Completar compra</Button>
+      <Button type="submit" className="bg-success" onClick={() => handleRequest()}>Completar compra</Button>
     </form>
   );
 }

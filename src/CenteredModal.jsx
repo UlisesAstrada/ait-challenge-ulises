@@ -85,7 +85,7 @@ const CenteredModal = (props) =>  {
                 </div>
               </div>
               <div className="d-flex justify-content-center align-items-center mt-2 flex-column">
-              <Form />
+              <Form itemsPrice={itemsPrice} iva={iva} totalPrice={totalPrice} cart={cart}/>
               </div>
             </>
           )}
