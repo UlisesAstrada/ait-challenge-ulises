@@ -9,10 +9,12 @@ import './App.css'
 const CenteredModal = (props) =>  {
 
   const {cart, onAdd, onRemove} = props
+  console.log(cart)
 
   const itemsPrice = cart.reduce((acc, curr) => acc + curr.price.substring(1) * curr.stock, 0);
   const iva = itemsPrice * 0.21;
-  const totalPrice = itemsPrice + iva
+  const totalPrice = itemsPrice + iva;
+  const products = cart.map((item) => `${item._id} x ${item.stock}`)
 
   return (
     <Modal
@@ -33,8 +35,7 @@ const CenteredModal = (props) =>  {
           {cart.map((item) => (
             <div key={item._id} className="d-flex justify-content-center rounded">
               <div className="d-flex bg-dark text-white justify-content-center mt-1 product-card">
-                <div className="">
-                  <img className="img-modal" src={item.image} alt={item.name} />
+                <div>
                   <div>{item.name}</div>
                     <button 
                       className="button btn-success mr-2 py-1 px-2" 
@@ -85,7 +86,12 @@ const CenteredModal = (props) =>  {
                 </div>
               </div>
               <div className="d-flex justify-content-center align-items-center mt-2 flex-column">
-              <Form itemsPrice={itemsPrice} iva={iva} totalPrice={totalPrice} cart={cart}/>
+              <Form 
+                itemsPrice={itemsPrice} 
+                iva={iva} 
+                totalPrice={totalPrice}
+                products={products}
+              />
               </div>
             </>
           )}

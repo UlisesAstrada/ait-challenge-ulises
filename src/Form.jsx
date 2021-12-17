@@ -7,17 +7,20 @@ import {Button} from 'react-bootstrap'
 
 
 const Form = (props) => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
-  const onSubmit = data => console.log(data)
+  const { register, handleSubmit, reset, clearErrors, formState, formState: { errors } } = useForm({
+    mode: "onChange"
+  });
 
-  const {itemsPrice, iva, totalPrice, cart} = props
+  const {itemsPrice, iva, totalPrice, products} = props
+  
+  const onSubmit = (data) => console.log(data)
 
   const handleRequest = () => {
     axios.post('https://ait-tesapi.herokuapp.com/sales', {
-      products: cart.products,
-      itemsPrice: itemsPrice,
-      iva: iva,
-      totalPrice: totalPrice
+      itemsPrice: itemsPrice.toFixed(2),
+      iva: iva.toFixed(2),
+      totalPrice: totalPrice.toFixed(2),
+      products: products
     })
     .then(function(response) {
       console.log(response)
@@ -38,6 +41,7 @@ const Form = (props) => {
     })
   }
 
+
   return (
     <form onSubmit={handleSubmit(onSubmit)} >
       <div className="d-flex flex-column">
@@ -51,10 +55,19 @@ const Form = (props) => {
         <input {...register("address", {required: true})} placeholder="Domicilio (calle, localidad, provincia)" className="mb-1" />
         {errors.address && <span className="bg-danger mb-2">El domicilio es requerido</span>}
 
-        <input {...register("cuil", {required: true, minLength: 11, maxLength: 11})} placeholder="CUIL/CUIT" className="mb-1" />
+        <input type="number" {...register("cuil", {required: true, minLength: 11, maxLength: 11, pattern: /^[0-9]*$/})} placeholder="CUIL/CUIT" className="mb-1" />
         {errors.cuil && <span className="bg-danger mb-2">El CUIT/CUIL es requerido, sin espacios ni guiones</span>}
       </div>
-      <Button type="submit" className="bg-success" onClick={() => handleRequest()}>Completar compra</Button>
+      <Button 
+        type="submit" 
+        className="bg-success" 
+        onClick={() => {handleRequest(); clearErrors(); reset({
+          keepErrors: false
+        })}}
+        disabled={!formState.isValid}
+      >
+        Completar compra
+      </Button>
     </form>
   );
 }

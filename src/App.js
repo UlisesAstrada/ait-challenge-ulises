@@ -21,6 +21,7 @@ function App() {
   const [products, setProducts] = useState([])
 
   const [cart, setCart] = useState([])
+  
 
   const onAdd = (item) => {
     const exists = cart.find(x => x._id === item._id)
@@ -56,6 +57,8 @@ function App() {
 
   const [modalShow, setModalShow] = React.useState(false);
 
+  console.log(cart)
+
   return (
     <div className="App bg-info">
       <header><h1>Productos</h1></header>
@@ -65,27 +68,19 @@ function App() {
       )}
       </div>
       <footer className='d-flex bg-primary justify-content-center py-3'>
-        {
-          cart.length === 1 ? (
-            <Button 
-          variant="success"
-          onClick={() => setModalShow(true)}
-        >
-          Ver carrito - {cart.length} producto
-        </Button>
-          )
-          :
-          (
-            <Button 
-          variant="success"
-          onClick={() => setModalShow(true)}
-        >
-          Ver carrito - {cart.length} productos
-        </Button>
-          )
-        }
 
-        <CenteredModal
+      
+        <div className="d-flex justify-content-center rounded">
+            <Button 
+              variant="success"
+              onClick={() => setModalShow(true)}
+            >
+              Ver carrito - {cart.length} productos
+            </Button>
+        </div>  
+
+
+      <CenteredModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         cart={cart}
@@ -99,3 +94,6 @@ function App() {
 }
 
 export default App;
+
+
+
