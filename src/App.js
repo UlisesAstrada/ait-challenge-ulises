@@ -4,6 +4,7 @@ import { Button } from 'react-bootstrap';
 
 import Product from './Product.jsx'
 import CenteredModal from './CenteredModal.jsx';
+import Search from './Search.jsx';
 
 import './App.css';
 
@@ -61,7 +62,10 @@ function App() {
 
   return (
     <div className="App bg-info">
-      <header><h1>Productos</h1></header>
+      <header>
+        <h1>Productos</h1>
+        <Search />
+      </header>
       <div className='container'>
       {products.map((item) => 
         <Product key={item._id} item={item} onAdd={onAdd}/>

@@ -10,7 +10,7 @@ const Product = (props) => {
 
   const addNotification = () => toast.success("😎 Producto añadido!", {
     position: "bottom-right",
-    autoClose: 3000,
+    autoClose: 1500,
     hideProgressBar: false,
     closeOnClick: true,
     pauseOnHover: true,
@@ -45,7 +45,7 @@ const Product = (props) => {
       </div>
       <ToastContainer 
         position="bottom-right"
-        autoClose={3000}
+        autoClose={1500}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick

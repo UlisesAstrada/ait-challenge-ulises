@@ -59,7 +59,7 @@ const CenteredModal = (props) =>  {
           {cart.length !== 0 && (
             <>
               <hr/>
-              <div className="bg-primary mt-1 d-flex justify-content-center">
+              <div className="bg-primary mt-1 d-flex justify-content-center text-white">
                 <div>
                   <b>Precio sin IVA:</b>
                 </div>
@@ -68,7 +68,7 @@ const CenteredModal = (props) =>  {
                 </div>
               </div>
 
-              <div className="bg-primary mt-1 d-flex justify-content-center">
+              <div className="bg-primary mt-1 d-flex justify-content-center text-white">
                 <div>
                   <b>IVA:</b>
                 </div>
@@ -77,7 +77,7 @@ const CenteredModal = (props) =>  {
                 </div>  
               </div>
 
-              <div className="bg-primary mt-1 d-flex justify-content-center">
+              <div className="bg-primary mt-1 d-flex justify-content-center text-white">
                 <div>
                   <b>Total: </b>
                 </div>
